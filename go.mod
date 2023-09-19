@@ -1,4 +1,4 @@
-module pgdb
+module github.com/kogan69/pgdb
 
 go 1.21
 
