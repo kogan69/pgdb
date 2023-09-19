@@ -9,6 +9,7 @@ import (
 	pgxuuid "github.com/jackc/pgx-gofrs-uuid"
 	pgxdecimal "github.com/jackc/pgx-shopspring-decimal"
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/jackc/pgx/v5/tracelog"
 )
@@ -93,4 +94,12 @@ func (p PgLogger) Log(ctx context.Context, level tracelog.LogLevel, msg string, 
 		attrs = append(attrs, slog.Any(k, v))
 	}
 	p.logger.LogAttrs(ctx, p.level, msg, attrs...)
+}
+
+func (p *PgDb) Query(ctx context.Context, sql string, params ...any) (pgx.Rows, error) {
+	return p.pool.Query(ctx, sql, params...)
+}
+
+func (p *PgDb) Exec(ctx context.Context, sql string, args ...interface{}) (pgconn.CommandTag, error) {
+	return p.pool.Exec(ctx, sql, args...)
 }
