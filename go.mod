@@ -1,4 +1,4 @@
-module dbconnect
+module pgdb
 
 go 1.21
 
